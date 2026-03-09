@@ -6,6 +6,8 @@ resolver = "3"
 edition = "2024"
 license = "MIT"
 repository = "https://github.com/chielo-org/zest-pam"
+readme = "README.md"
+license-file = "LICENSE"
 
 [workspace.dependencies]
 zest-pam-sys = { version = "0.1.0", path = "sys" }

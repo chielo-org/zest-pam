@@ -5,6 +5,8 @@ description = "Rust FFI Bindings to PAM (Pluggable Authentication Modules)"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
+readme.workspace = true
+license-file.workspace = true
 
 [features]
 default = ["safe-wrappers"]

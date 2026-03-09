@@ -1,12 +1,14 @@
 #![cfg(feature = "safe-wrappers")]
 
-mod item;
+mod conv;
 mod error;
 mod handle;
-mod conv;
+mod item;
+mod raw_error_code;
 
 pub use self::{
-    error::{PamError, PamRawErrorCode, PamResult, pam_res_from_code},
-    conv::{PamMessageStyle},
+    conv::PamMessageStyle,
+    error::{PamError, PamResult, pam_res_from_code},
     handle::{PamHandle, RawPamHandle},
+    raw_error_code::PamRawErrorCode,
 };

@@ -1,9 +1,12 @@
 [package]
 name = "zest-pam-modules"
 version = "0.1.0"
+description = "Rust Bindings for PAM modules"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
+readme.workspace = true
+license-file.workspace = true
 
 [dependencies]
 zest-pam-sys.workspace = true
