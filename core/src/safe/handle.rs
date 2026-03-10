@@ -6,28 +6,29 @@ use core::{
 
 use crate::{PamError, PamResult, ffi::pam_handle_t};
 
-pub enum RawPamHandle {}
+#[derive(Debug)]
+pub enum PamRawHandle {}
 
 #[must_use]
+#[derive(Debug)]
 pub struct PamHandle {
-    ptr: NonNull<RawPamHandle>,
+    ptr: NonNull<PamRawHandle>,
 }
 
 impl PamHandle {
     /// # Safety
     ///
-    ///  The lifecycle of the raw handle won't be managed by `PamHandle`.
+    /// The lifecycle of the raw handle won't be managed by `PamHandle`.
     #[inline]
-    pub const unsafe fn new(ptr: NonNull<RawPamHandle>) -> Self {
+    pub const unsafe fn new(ptr: NonNull<PamRawHandle>) -> Self {
         Self { ptr }
     }
 
     /// # Safety
     ///
-    /// `ptr` must be non-null. The lifecycle of the raw handle won't be managed
-    /// by `PamHandle`.
+    /// The lifecycle of the raw handle won't be managed by `PamHandle`.
     #[inline]
-    pub unsafe fn from_ptr(ptr: *mut RawPamHandle) -> PamResult<Self> {
+    pub unsafe fn from_ptr(ptr: *mut PamRawHandle) -> PamResult<Self> {
         let ptr = NonNull::new(ptr).ok_or(PamError::PamHandleNullPtr)?;
         Ok(unsafe { Self::new(ptr) })
     }
@@ -37,23 +38,31 @@ impl PamHandle {
     /// `ptr` must be non-null. The lifecycle of the raw handle won't be managed
     /// by `PamHandle`.
     #[inline]
-    pub const unsafe fn from_ptr_uncheck(ptr: *mut RawPamHandle) -> Self {
+    pub const unsafe fn from_ptr_uncheck(ptr: *mut PamRawHandle) -> Self {
         unsafe { Self::new(NonNull::new_unchecked(ptr)) }
     }
 
+    /// # Safety
+    ///
+    /// `ptr` shall not be passed around.
     #[inline]
-    pub const fn as_ptr(&self) -> *const RawPamHandle {
+    pub const unsafe fn as_ptr_mut(&mut self) -> *mut PamRawHandle {
         self.ptr.as_ptr()
     }
 
     #[inline]
-    pub const fn into_ptr(self) -> NonNull<RawPamHandle> {
+    pub const fn as_ptr(&self) -> *const PamRawHandle {
+        self.ptr.as_ptr()
+    }
+
+    #[inline]
+    pub const fn into_ptr(self) -> NonNull<PamRawHandle> {
         self.ptr
     }
 }
 
 impl Deref for PamHandle {
-    type Target = RawPamHandle;
+    type Target = PamRawHandle;
 
     #[inline]
     fn deref(&self) -> &Self::Target {
@@ -68,42 +77,42 @@ impl DerefMut for PamHandle {
     }
 }
 
-impl AsRef<RawPamHandle> for PamHandle {
+impl AsRef<PamRawHandle> for PamHandle {
     #[inline]
-    fn as_ref(&self) -> &RawPamHandle {
+    fn as_ref(&self) -> &PamRawHandle {
         self
     }
 }
 
-impl AsMut<RawPamHandle> for PamHandle {
+impl AsMut<PamRawHandle> for PamHandle {
     #[inline]
-    fn as_mut(&mut self) -> &mut RawPamHandle {
+    fn as_mut(&mut self) -> &mut PamRawHandle {
         self
     }
 }
 
-impl Borrow<RawPamHandle> for PamHandle {
+impl Borrow<PamRawHandle> for PamHandle {
     #[inline]
-    fn borrow(&self) -> &RawPamHandle {
+    fn borrow(&self) -> &PamRawHandle {
         self
     }
 }
 
-impl From<&RawPamHandle> for *const pam_handle_t {
+impl From<&PamRawHandle> for *const pam_handle_t {
     #[inline]
-    fn from(value: &RawPamHandle) -> Self {
-        (value as *const RawPamHandle).cast()
+    fn from(value: &PamRawHandle) -> Self {
+        (value as *const PamRawHandle).cast()
     }
 }
 
-impl From<&mut RawPamHandle> for *mut pam_handle_t {
+impl From<&mut PamRawHandle> for *mut pam_handle_t {
     #[inline]
-    fn from(value: &mut RawPamHandle) -> Self {
-        (value as *mut RawPamHandle).cast()
+    fn from(value: &mut PamRawHandle) -> Self {
+        (value as *mut PamRawHandle).cast()
     }
 }
 
-impl From<PamHandle> for NonNull<RawPamHandle> {
+impl From<PamHandle> for NonNull<PamRawHandle> {
     #[inline]
     fn from(handle: PamHandle) -> Self {
         handle.into_ptr()

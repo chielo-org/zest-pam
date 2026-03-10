@@ -1,0 +1,14 @@
+[package]
+name = "zest-pam-app"
+version = "0.1.0"
+description = "A wrapper of application interfaces of PAM (Pluggable Authentication Modules)"
+license = "MIT"
+edition.workspace = true
+repository.workspace = true
+readme.workspace = true
+
+[dependencies]
+derive_more = { version = "2.1.1", features = ["deref", "deref_mut"] }
+libc = "0.2"
+zeroize = "1.8.2"
+zest-pam-core.workspace = true

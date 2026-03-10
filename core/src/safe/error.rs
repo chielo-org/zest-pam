@@ -1,5 +1,6 @@
 use core::ffi::c_int;
 
+use alloc::ffi::{IntoStringError, NulError};
 use derive_more::{Display, Error};
 
 use crate::PamRawErrorCode;
@@ -17,6 +18,10 @@ pub enum PamError {
     UnknownMessageStyle { code: i32 },
     #[display("unknown error: {code}")]
     UnknownError { code: i32 },
+    #[display("invalid utf8 string: {_0}")]
+    InvalidUtf8(#[error(source)] IntoStringError),
+    #[display("interior nul char in utf8 string: {_0}")]
+    InteriorNul(#[error(source)] NulError),
     #[display("no conversation callback is set")]
     NoConv,
     #[display("conversation response is a null point")]
@@ -50,5 +55,17 @@ pub fn pam_res_from_code(code: c_int) -> PamResult<()> {
         Err(e)
     } else {
         Ok(())
+    }
+}
+
+impl From<IntoStringError> for PamError {
+    fn from(value: IntoStringError) -> Self {
+        Self::InvalidUtf8(value)
+    }
+}
+
+impl From<NulError> for PamError {
+    fn from(value: NulError) -> Self {
+        Self::InteriorNul(value)
     }
 }

@@ -1,0 +1,10 @@
+[package]
+name = "zest-pam-module"
+version = "0.1.0"
+description = "A wrapper of module interfaces of PAM (Pluggable Authentication Modules)"
+license = "MIT"
+edition.workspace = true
+repository.workspace = true
+readme.workspace = true
+
+[dependencies]

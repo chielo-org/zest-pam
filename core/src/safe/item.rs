@@ -3,7 +3,7 @@ use core::{
     ptr::null,
 };
 
-use crate::{PamResult, RawPamHandle, ffi::*, pam_res_from_code};
+use crate::{PamRawHandle, PamResult, ffi::*, pam_res_from_code};
 
 macro_rules! c_str_item_methods {
     ($getter:ident, $setter:ident, $item_type:ident) => {
@@ -25,7 +25,7 @@ macro_rules! c_str_item_methods {
     };
 }
 
-impl RawPamHandle {
+impl PamRawHandle {
     /// # Safety
     ///
     /// The returned pointer is owned by the underlay `pam_handle_t`.
