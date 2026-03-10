@@ -1,12 +1,11 @@
 [package]
-name = "zest-pam-sys"
+name = "zest-pam-core"
 version = "0.1.0"
 description = "Rust FFI Bindings to PAM (Pluggable Authentication Modules)"
+license = "MIT"
 edition.workspace = true
-license.workspace = true
 repository.workspace = true
 readme.workspace = true
-license-file.workspace = true
 
 [features]
 default = ["safe-wrappers"]
