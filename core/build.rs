@@ -41,8 +41,10 @@ mod generate_bindings {
 
         println!("cargo:rerun-if-changed={}", wrapper_header_path.display());
 
+        let wrapper_header_path = wrapper_header_path.to_string_lossy();
         bindgen::builder()
-            .header(wrapper_header_path.to_string_lossy())
+            .clang_arg(format!("-I{}", pam_include_dir.display()))
+            .header(wrapper_header_path)
             .use_core()
             .size_t_is_usize(true)
             .default_macro_constant_type(bindgen::MacroTypeVariation::Signed)

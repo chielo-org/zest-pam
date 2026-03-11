@@ -180,15 +180,6 @@ unsafe extern "C" {
     ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn pam_start_confdir(
-        service_name: *const ::core::ffi::c_char,
-        user: *const ::core::ffi::c_char,
-        pam_conversation: *const pam_conv,
-        confdir: *const ::core::ffi::c_char,
-        pamh: *mut *mut pam_handle_t,
-    ) -> ::core::ffi::c_int;
-}
-unsafe extern "C" {
     pub fn pam_end(pamh: *mut pam_handle_t, pam_status: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
@@ -422,13 +413,6 @@ const _: () = {
     ["Offset of field: spwd::sp_flag"][::core::mem::offset_of!(spwd, sp_flag) - 64usize];
 };
 unsafe extern "C" {
-    pub fn pam_modutil_check_user_in_passwd(
-        pamh: *mut pam_handle_t,
-        user_name: *const ::core::ffi::c_char,
-        file_name: *const ::core::ffi::c_char,
-    ) -> ::core::ffi::c_int;
-}
-unsafe extern "C" {
     pub fn pam_modutil_getpwnam(
         pamh: *mut pam_handle_t,
         user: *const ::core::ffi::c_char,
@@ -556,11 +540,4 @@ unsafe extern "C" {
         redirect_stdout: pam_modutil_redirect_fd,
         redirect_stderr: pam_modutil_redirect_fd,
     ) -> ::core::ffi::c_int;
-}
-unsafe extern "C" {
-    pub fn pam_modutil_search_key(
-        pamh: *mut pam_handle_t,
-        file_name: *const ::core::ffi::c_char,
-        key: *const ::core::ffi::c_char,
-    ) -> *mut ::core::ffi::c_char;
 }
