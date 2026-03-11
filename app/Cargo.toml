@@ -9,6 +9,6 @@ readme.workspace = true
 
 [dependencies]
 derive_more = { version = "2.1.1", features = ["deref", "deref_mut"] }
-libc = "0.2"
-zeroize = "1.8.2"
+libc = "0.2.183"
+zeroize = { version = "1.8.2", features = ["std"] }
 zest-pam-core.workspace = true

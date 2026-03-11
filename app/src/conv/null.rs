@@ -11,6 +11,7 @@ use zest_pam_core::{
 use crate::PamRawConvImpl;
 
 impl PamRawConvImpl for () {
+    #[inline]
     fn on_conv(
         &mut self,
         _style: PamMessageStyle,
@@ -28,7 +29,8 @@ pub(crate) static NULL_CONV: NullConv = NullConv(pam_conv {
 pub(crate) struct NullConv(pam_conv);
 
 impl NullConv {
-    pub fn as_ptr(&'static self) -> *const pam_conv {
+    #[inline]
+    pub const fn as_ptr(&'static self) -> *const pam_conv {
         &self.0
     }
 }

@@ -14,15 +14,15 @@ safe-wrappers = [
   "dep:derive_more",
   "dep:libc",
   "dep:num_enum",
+  "dep:zeroize",
 ]
-zeroize = ["dep:zeroize"]
 
 [dependencies]
-derive_more = { version = "2", default-features = false, optional = true, features = ["display", "error"] }
-libc = { version = "0.2", default-features = false, optional = true }
-num_enum = { version = "0.7", default-features = false, optional = true }
-zeroize = { version = "1.8.2", default-features = false, optional = true }
+derive_more = { version = "2.1.1", optional = true, default-features = false, features = ["display", "error"] }
+libc = { version = "0.2.183", optional = true, default-features = false }
+num_enum = { version = "0.7.5", optional = true, default-features = false }
+zeroize = { version = "1.8.2", optional = true, default-features = false, features = ["alloc"] }
 
 [build-dependencies]
-anyhow = "1"
-bindgen = { version = "0.72", optional = true }
+anyhow = "1.0.102"
+bindgen = { version = "0.72.1", optional = true }
